@@ -10,6 +10,7 @@ import {
   BarChart2,
   Settings,
   LogOut,
+  Shield,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { logoutAction } from "@/actions/auth";
@@ -26,9 +27,10 @@ const NAV_ITEMS = [
 interface SidebarProps {
   displayName: string;
   userEmail: string;
+  isAdmin?: boolean;
 }
 
-export function DashboardSidebar({ displayName, userEmail }: SidebarProps) {
+export function DashboardSidebar({ displayName, userEmail, isAdmin }: SidebarProps) {
   const pathname = usePathname();
 
   return (
@@ -59,6 +61,15 @@ export function DashboardSidebar({ displayName, userEmail }: SidebarProps) {
 
       {/* Navigation */}
       <nav className="flex-1 p-3 flex flex-col gap-0.5 overflow-y-auto">
+        {isAdmin && (
+          <Link
+            href="/admin"
+            className="flex items-center gap-2.5 px-3 py-2 mb-2 rounded-[var(--radius-md)] text-[0.875rem] font-semibold transition-base no-underline text-[var(--color-primary)] hover:bg-[var(--color-bg)]"
+          >
+            <Shield size={16} strokeWidth={2} />
+            Admin Panel
+          </Link>
+        )}
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
           const isActive = item.exact

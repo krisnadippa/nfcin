@@ -1,6 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { Shield } from "lucide-react";
 
 const ROUTE_TITLES: Record<string, string> = {
   "/dashboard": "Overview",
@@ -13,9 +15,10 @@ const ROUTE_TITLES: Record<string, string> = {
 
 interface HeaderProps {
   displayName: string;
+  isAdmin?: boolean;
 }
 
-export function DashboardHeader({ displayName }: HeaderProps) {
+export function DashboardHeader({ displayName, isAdmin }: HeaderProps) {
   const pathname = usePathname();
   const title =
     Object.entries(ROUTE_TITLES)
@@ -34,10 +37,22 @@ export function DashboardHeader({ displayName }: HeaderProps) {
         {title}
       </h1>
 
-      {/* User avatar — desktop only */}
-      <div className="hidden lg:flex items-center gap-2">
+      <div className="flex items-center gap-2.5">
+        {isAdmin && (
+          <Link
+            href="/admin"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--radius-md)] text-[0.6875rem] font-semibold uppercase tracking-wide border no-underline transition-base"
+            style={{
+              borderColor: "var(--color-border)",
+              color: "var(--color-fg)",
+            }}
+          >
+            <Shield size={12} className="text-[var(--color-primary)]" />
+            <span>Admin</span>
+          </Link>
+        )}
         <div
-          className="size-7 rounded-full flex items-center justify-center text-[0.75rem] font-semibold text-white"
+          className="size-7 rounded-full flex items-center justify-center text-[0.75rem] font-semibold text-white shrink-0"
           style={{ backgroundColor: "var(--color-primary)" }}
         >
           {displayName.charAt(0).toUpperCase()}
