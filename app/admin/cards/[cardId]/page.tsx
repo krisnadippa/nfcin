@@ -6,6 +6,7 @@ import { getNfcUrl, getActivationUrl } from "@/lib/utils/url";
 import { format } from "date-fns";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { NfcWriter } from "@/components/admin/nfc-writer";
 
 interface Props {
   params: Promise<{ cardId: string }>;
@@ -89,6 +90,8 @@ export default async function AdminCardDetailPage({ params }: Props) {
 
         {/* QR codes */}
         <div className="flex flex-col gap-4">
+          <NfcWriter nfcUrl={nfcUrl} cardCode={card.card_code} />
+
           <div className="surface p-5">
             <p className="text-label mb-1">Activation QR Code</p>
             <p className="text-caption mb-4">
