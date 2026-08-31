@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, CreditCard, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, CreditCard, Users, LogOut, Nfc } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { logoutAction } from "@/actions/auth";
 
 const NAV = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
+  { href: "/admin/scan", label: "Scan NFC", icon: Nfc },
   { href: "/admin/cards", label: "Cards", icon: CreditCard },
   { href: "/admin/customers", label: "Customers", icon: Users },
 ];

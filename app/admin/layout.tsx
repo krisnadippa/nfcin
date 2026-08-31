@@ -2,6 +2,8 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth/session";
 import { queryOne } from "@/lib/db";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
+import Link from "next/link";
+import { Nfc } from "lucide-react";
 
 async function requireAdmin() {
   const session = await getSession();
@@ -28,7 +30,7 @@ export default async function AdminLayout({
       <AdminSidebar userEmail={session.email} />
       <div className="flex-1 flex flex-col min-w-0 lg:ml-56">
         <header
-          className="h-14 shrink-0 flex items-center px-6 border-b sticky top-0 z-20"
+          className="h-14 shrink-0 flex items-center justify-between px-6 border-b sticky top-0 z-20"
           style={{
             backgroundColor: "var(--color-surface)",
             borderColor: "var(--color-border)",
@@ -47,6 +49,17 @@ export default async function AdminLayout({
             </span>
             <span className="text-caption">{session.email}</span>
           </div>
+          <Link
+            href="/admin/scan"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-md)] text-[0.75rem] font-medium transition-base border no-underline hover:bg-[var(--color-bg)]"
+            style={{
+              borderColor: "var(--color-border)",
+              color: "var(--color-fg)",
+            }}
+          >
+            <Nfc size={14} />
+            <span>Scan NFC</span>
+          </Link>
         </header>
         <main className="flex-1 p-6">{children}</main>
       </div>

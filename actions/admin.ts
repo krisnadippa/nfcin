@@ -130,3 +130,17 @@ export async function registerCustomCardAction(
   }
 }
 
+export async function getCardIdByCodeAction(cardCode: string): Promise<{ error?: string; id?: string }> {
+  await requireAdmin();
+  const cleaned = cardCode.trim().toUpperCase();
+  const card = await queryOne<{ id: string }>(
+    "SELECT id FROM cards WHERE card_code = $1",
+    [cleaned]
+  );
+  if (!card) {
+    return { error: "Card code not found." };
+  }
+  return { id: card.id };
+}
+
+
