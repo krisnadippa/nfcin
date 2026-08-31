@@ -1,26 +1,183 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================================
+   DESIGN SYSTEM — NFC Smart Profile
+   Color palette: professional, restrained, no gradients
+   ============================================================ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-bg: #F8F8F6;
+    --color-fg: #171717;
+    --color-primary: #171717;
+    --color-secondary: #525252;
+    --color-muted: #737373;
+    --color-border: #E5E5E5;
+    --color-surface: #FFFFFF;
+    --color-success: #15803D;
+    --color-success-bg: #F0FDF4;
+    --color-warning: #A16207;
+    --color-warning-bg: #FEFCE8;
+    --color-danger: #B91C1C;
+    --color-danger-bg: #FEF2F2;
+
+    /* Typography scale */
+    --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+    /* Spacing */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+
+    /* Shadows — subtle only */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+    --shadow-md: 0 1px 4px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+    --shadow-lg: 0 4px 16px 0 rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    min-height: 100vh;
+  }
+
+  /* Focus styles — keyboard accessible */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar — subtle */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Typography classes */
+  .text-display {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--color-fg);
+  }
+
+  .text-heading {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--color-fg);
+  }
+
+  .text-subheading {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+  }
+
+  .text-body {
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--color-secondary);
+  }
+
+  .text-caption {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .text-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    color: var(--color-fg);
+  }
+
+  .text-mono {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background-color: var(--color-border);
+    width: 100%;
+  }
+
+  /* Section container */
+  .container-page {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Card surface */
+  .surface {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Skeleton animation */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-border) 25%,
+      #efefed 50%,
+      var(--color-border) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: var(--radius-md);
+  }
+
+  @keyframes skeleton-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Transitions */
+  .transition-base {
+    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  }
 }
